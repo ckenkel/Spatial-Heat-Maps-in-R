@@ -16,3 +16,5 @@ Raw survey data are multiplied by 1000 and log-linear-hybrid transformed and rou
 A spatial heatmap is plotted by converting cover to density of particular survey coordinates and using these as the shading parameter. 
 
 This visual is meant to serve as a ‘for example’ as a means to assess and re-evaluate restoration needs.
+
+When applying to other datasets, please only use fixed surveys as input. Random surveys will yield variation in coral cover simply due to variation among sites, which does not necessarily reflect the gain or loss of corals over time. 
