@@ -11,9 +11,9 @@ library(MCMC.OTU)
 ########################################################
 
 #read in coral cover data. NOTE change these to YOUR local file path 
-data <- read.csv(file="/Users/carlykenkel/Dropbox/CarlsLab/ResearchProjects/RGWGshared/Rscripts/CREMP_Core_Species_Percent_Cover_Table.csv")
+data <- read.csv(file="/Users/drcarl/Dropbox/CarlsLab/ResearchProjects/RGWGshared/Rscripts/CREMP_Core_Species_Percent_Cover_Table.csv")
 
-gps<-read.csv(file="/Users/carlykenkel/Dropbox/CarlsLab/ResearchProjects/RGWGshared/Rscripts/Coral_Reef_Evaluation_and_Monitoring_Project_CREMP_Locations.csv")
+gps<-read.csv(file="/Users/drcarl/Dropbox/CarlsLab/ResearchProjects/RGWGshared/Rscripts/Coral_Reef_Evaluation_and_Monitoring_Project_CREMP_Locations.csv")
 head(gps)
 
 #subset gps to useful columns only
@@ -85,14 +85,15 @@ keys.map <- get_map(location = c(mean.longitude, mean.latitude), zoom =10, scale
 ## Convert into ggmap object
 keys.map <- ggmap(keys.map, extent="device", legend="none")
 
-names(Upper3)
+#names(Upper3)
 #Particular species of interest by column number
 #OannComplex=39; Acer=11; Apal=12; Past=40; Cnat=17; Pseudodip=42&43; Sidsid=47; StephInt=49; Mcav=32
+#Stephanocoenia_intersepta Siderastrea_siderea Pseudodiploria_clivosa Pseudodiploria_strigosa Colpophyllia_natans Acropora_palmata Porites_astreoides Montastraea_cavernosa  Orbicella_annularis_complex
 
-ACER<-Upper3[,c(3,4,6,42)] #change last column number to your favorite species
+ACER<-Upper3[,c(3,4,6,40)] #change last column number to your favorite species
 
 #stat_density fcn uses each row as incidence data. therefore must expand selected column to indicate N rows
-dfexp <- expandRows(ACER, "Pseudodiploria_clivosa") #change species name here to match column header
+dfexp <- expandRows(ACER, "Porites_astreoides") #change species name here to match column header
 
 ## Plot a heat map layer: Polygons with fill colors based on
 ## relative coral cover
@@ -105,15 +106,15 @@ keys.map <- keys.map + scale_fill_gradientn(colours=rev(brewer.pal(7, "Spectral"
 keys.map <- keys.map + guides(size=FALSE, alpha = FALSE)
 
 ## Give the map a title
-keys.map <- keys.map + ggtitle("Relative Change in Percent Cover of P. clivosa from 1996 to 2015") #change spp name
+keys.map <- keys.map + ggtitle("Relative Change in Percent Cover of P. astreoides from 1996 to 2015") #change spp name
 
 
 
 ## Subset to Plot coral cover by year
-keys.map <- keys.map + facet_wrap(~Sample_Year)
+keys.map <- keys.map + facet_wrap(~Sample_Year) +theme_bw() 
 
 #Export PDF
-pdf(file="Cnat_CREMP_LogLinCoralCover_ByYear.pdf",height=11,width=8) #change spp name
+pdf(file="Past_CREMP_LogLinCoralCover_ByYear.pdf",height=11,width=8) #change spp name
 print(keys.map) # this is necessary to display the plot
 dev.off()
 
